@@ -10,24 +10,26 @@ const __dirname = path.dirname(__filename);
 
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
+app.set('view engine', 'ejs')
+app.set('views', path.join(__dirname, 'views','pages'))
 
 // Route to serve about.html when /about is accessed
 app.get('/about', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'about.html'));
+  res.render('about',{message:'fuck you'})
 });
 
 // (Optional) Keep the root path serving 404.html for demonstration,
 // but in a real application, you'd likely serve index.html or a proper homepage at /
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html')); // Or index.html in real app
+  res.render('index') // Or index.html in real app
 });
 
 app.get('/contact-me', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'contact-me.html'));
+  res.render('contact-me')
 });
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', '404.html'));
+  res.render('404')
 });
 
 app.listen(5000, () => console.log("Server is running on port 5000"));
